@@ -1,0 +1,94 @@
+.container-countdown {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    &.reflection {
+        .card-countdown {
+            -webkit-box-reflect: below 0 linear-gradient(transparent, rgba(0, 0, 0, 0.384));
+        }
+    }
+    &.box-shadow {
+        .card-countdown {
+            box-shadow: 10px 15px 12px 0px rgb(0 0 0 / 21%);
+        }
+    }
+    .card-countdown {
+        width: 105px;
+        height: 105px;
+        // padding: 20px 40px;
+        margin: 10px;
+        border-radius: 10px;
+        text-align: center;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        h5 {
+            margin-top: 20px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        p {
+            color: #000 !important;
+            font-size: 17px;
+            margin-top: 3px;
+            font-weight: 500;
+        }
+    }
+    &.bordered {
+        justify-content: center;
+        .card-countdown {
+            border-radius: 0;
+            flex: 0 0 20%;
+            background-color: rgba(255, 255, 255, 0);
+            border-style: double;
+            border-width: 4px 4px 4px 4px;
+            border-color: rgba(167, 133, 86, .38);
+            padding: 80px 20px 80px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            h5 {
+                margin-top: 20px;
+                font-size: 32px;
+                font-weight: 700;
+            }
+            p {
+                font-size: 18px;
+                margin-top: 3px;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@media only screen and(max-width:767px) {
+    .container-countdown {
+        .card-countdown {
+            width: 75px;
+            height: 75px;
+            margin: 5px;
+            h5 {
+                font-size: 18px;
+            }
+            p {
+                font-size: 13px;
+            }
+        }
+        &.bordered {
+            .card-countdown {
+                // width: 75px;
+                // height: 75px;
+                padding: 40px 20px 40px 20px;
+                margin: 5px;
+                h5 {
+                    font-size: 18px;
+                }
+                p {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
