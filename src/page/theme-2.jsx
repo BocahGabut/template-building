@@ -17,8 +17,6 @@ import { openGift } from '../component/other'
 
 import { GetLocalStorage } from '../main'
 
-import { Theme2 } from '../component/Item'
-
 const imageMasory = [
   {
     id: '002129119271',

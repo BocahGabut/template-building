@@ -2,6 +2,10 @@ import React,{Component,useState} from 'react';
 import { SketchPicker } from 'react-color';
 import '../scss/other.scss'
 
+import { scroller } from "react-scroll";
+import { useDispatch } from 'react-redux';
+import { deleteMengundang,tambahMengundang } from '../store';
+
 const Scroll1 = () => {
     return(
         <>
@@ -24,6 +28,13 @@ const Scroll2 = () => {
     )
 }
 
+export const ScrollTo = (target) => {
+    scroller.scrollTo(target, {
+        duration: 500,
+        delay: 0,
+    });
+}
+
 export function ScrollIcons(props){
     switch(props.type){
         case 'inner':
@@ -35,6 +46,97 @@ export function ScrollIcons(props){
     }
 }
 
+export const FormMengundang = (props) => {
+    const dispatch = useDispatch()
+    const [value, setvalue] = useState("");
+
+    const handleDelete = (index) => {
+        dispatch(deleteMengundang({index: index}))
+    }
+
+    const handleInput = (e) => {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        
+        setvalue(value)
+    }
+
+    const handleTambah = () => {
+        if(props.data.length >= 10){
+            alert('Data tidak boleh lebih dari 10')
+        } else {
+            dispatch(tambahMengundang({data: value}))
+            document.getElementById('mmd-0312-ma').value = ''
+        }
+    }
+
+    return(
+        <>
+             <div className={`ra-sm-property ${(props.className) ? props.className : ``}`} style={{width:props.width}}>
+                <label className='info mb-1'>Turut Mengundang</label>
+                <div className="group-container">
+                    <div className="group">
+                        <input id='mmd-0312-ma' onKeyUp={(e) => handleInput(e)} autoComplete='off' placeholder={(props.placeholder) ? props.placeholder : ''} />
+                        <div onClick={() => handleTambah()} className="btn--">Add</div>
+                    </div>
+                    <span>Maks 10</span>
+                    <div className="group-items">
+                        {
+                            props.data.map((items,index) => {
+                                return(
+                                    <div className="items" key={index}>
+                                        {items} 
+                                        <span onClick={() => handleDelete(index)} >X</span>
+                                    </div> 
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export const AudioComponent = props => {
+    return(
+        <>
+            <div className="container-audio">
+                <audio src={props.src} controls controlsList="nodownload" ></audio>
+            </div>
+        </>
+    )
+}
+
+export const FormSwitch = (props) => {
+    return(
+        <>
+            <div className={`ra-sm-property ${(props.className) ? props.className : ``}`} style={{width:props.width}}>
+                <div className="cst-switch">
+                    <input checked={(props.checked) ? true : false} name={props.name} onChange={(e) => props.handleInput(e)} type="checkbox" id={props.id} />
+                    <label className='cst-label' htmlFor={props.id}>{props.label}</label>
+                </div>
+                {(props.details) ? <label>{props.details}</label> : ''}
+            </div>
+        </>
+    )
+}
+
+export const FormRadio = (props) => {
+    return(
+        <>
+            <div className={`ra-sm-property ${(props.className) ? props.className : ``}`} style={{width:props.width}}>
+                <div className="cst-radio">
+                    <label htmlFor={props.id}>
+                        <input checked={(props.checked) ? true : false} data-value={props.dataValue} data-label={props.dataLabel} onChange={(e) => props.handleInput(e)} type="radio" id={props.id} />
+                        <span>{(props.content) ? props.content : props.span}</span>
+                    </label>
+                </div>
+            </div>
+        </>
+    )
+}
+
 export const FormSelect = (props) => {
     return(
         <>
@@ -42,9 +144,9 @@ export const FormSelect = (props) => {
                 <label>{props.title}</label>
                 <div className="ra-select">
                     <select name={props.name} onChange={(e) => props.handleInput(e)} defaultValue={props.value}>
-                        {props.data.map((items) => {
+                        {props.data.map((items,index) => {
                             return(
-                                <option key={items.value} value={items.value}>{items.display}</option>
+                                <option key={index} value={items.value}>{items.display}</option>
                             )
                         })}
                     </select>
@@ -57,6 +159,7 @@ export const FormSelect = (props) => {
     )
 }
 
+
 export const FormText = (props) => {
     return(
         <>
@@ -64,7 +167,8 @@ export const FormText = (props) => {
                 <label className='info mb-1'>{props.title} 
                     {/* <br /> <span>click enter to see the changes</span> */}
                 </label>
-                <input placeholder={(props.placeholder) ? props.placeholder : ''} name={props.name}  defaultValue={props.value} type="text" onKeyUp={(e) => props.handleInput(e)} />
+                <input placeholder={(props.placeholder) ? props.placeholder : ''} name={props.name}  defaultValue={props.value} type={(props.type) ? props.type : 'text'} onKeyUp={(e) => props.handleInput(e)} />
+                {(props.info) ? <span className='mt-1'>{props.info}</span> : ''}
             </div>
         </>
     )
@@ -75,7 +179,8 @@ export const FormTextArea = (props) => {
         <>
             <div className="ra-sm-property" style={{width:props.width}}>
                 <label>{props.title}</label>
-                <textarea onChange={(e) => props.handleInput(e)} name={props.name} id={props.id} defaultValue={props.value} rows={(props.rows) ? props.rows : '3'}></textarea>
+                <textarea placeholder={(props.placeholder) ? props.placeholder : ''} onChange={(e) => props.handleInput(e)} name={props.name} id={props.id} defaultValue={props.value} rows={(props.rows) ? props.rows : '3'}></textarea>
+                {(props.info) ? <span className='mt-1'>{props.info}</span> : ''}
             </div>
         </>
     )
@@ -113,6 +218,28 @@ export const FormDate = (props) => {
             <div className="ra-sm-property" style={{width:props.width}}>
                 <label>{props.title}</label>
                 <input name={props.name} defaultValue={props.value} type={props.type} onChange={(e) => props.handleInput(e)} />
+                {(props.info) ? <span className='mt-1'>{props.info}</span> : ''}
+            </div>
+        </>
+    )
+}
+
+export const FormDropDown = (props) => {
+    return(
+        <>
+            <div className={`ra-sm-property ${(props.className) ? props.className : ``}`}>
+                <label>test</label>
+                <input type="text" onKeyUp={(e) => props.onKeyUp(e)} />
+                {
+                    (props.open) ? 
+                        <div className="drop-items">
+                            <div className="items">
+                                <i className="fal fa-map-pin"></i>
+                                <label><strong>Grage Mall Cirebon</strong>, Jalan Tentara Pelajar, Kejaksan, Cirebon City, West Java, Indonesia</label>
+                            </div>
+                        </div>
+                    : ''
+                }
             </div>
         </>
     )
@@ -379,8 +506,7 @@ export const FormImage = (props) => {
                     <div className="top">
                         <label>{props.details} <img onClick={() => handleOpenView()} src={props.imageDetails} alt="" /> </label>
                     </div>
-                    <div className="content">
-                        <label>Image</label>
+                    <div className="content mt-2">
                         <div className="button-image" onClick={() => handleOpen()}>Add images</div>
                         {
                             (open) ? 

@@ -1,5 +1,22 @@
 .modal-image-container,
-.modal-cst-container {
+.modal-icons-container {
+    &.mobile {
+        .modal-image-dialog {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            .modal-image-dialog-content {
+                .container-dropzone {
+                    .dropzone {
+                        padding: 95px 10px;
+                    }
+                }
+            }
+            .image-container {
+                height: 53vh;
+            }
+        }
+    }
     overflow-y: auto;
     position: fixed;
     background-color: rgba(0, 0, 0, .5);
@@ -14,7 +31,7 @@
         display: flex;
     }
     .modal-image-dialog,
-    .modal-cst-dialog {
+    .modal-icons-dialog {
         animation: slide-down .225s;
         text-shadow: -1px -1px 0 rgb(0 0 0 / 5%);
         margin: auto;
@@ -23,11 +40,11 @@
         border-radius: 3px;
         font-weight: lighter;
         position: relative;
-        z-index: 1592;
+        z-index: 1892;
         background-color: #463a3c;
         color: #d8d8d8;
         .modal-image-dialog-header,
-        .modal-cst-dialog-header {
+        .modal-icons-dialog-header {
             position: relative;
             border-bottom: 1px solid rgba(0, 0, 0, .2);
             padding: 10px 15px;
@@ -45,23 +62,24 @@
             }
         }
         .modal-image-dialog-content,
-        .modal-cst-dialog-content {
+        .modal-icons-dialog-content {
             padding: 10px 22px 10px 15px;
             clear: both;
             position: relative;
-            .progress {
-                width: 100%;
-                height: 6px;
-                background: #e1e4e8;
-                border-radius: 3px;
-                overflow: hidden;
-                .progress-bar {
-                    display: block;
-                    height: 100%;
-                    background: linear-gradient(90deg, #ffd33d, #ea4aaa 17%, #b34bff 34%, #01feff 51%, #ffd33d 68%, #ea4aaa 85%, #b34bff);
-                    background-size: 300% 100%;
-                    animation: progress-animation 2s linear infinite;
-                }
+            height: 100%;
+        }
+    }
+    .modal-icons-dialog {
+        position: absolute;
+        margin: 0;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        min-height: 350px;
+        .modal-icons-dialog-content {
+            padding: 20px 20px;
+            .openlayers-map {
+                height: 420px;
             }
         }
     }
@@ -142,6 +160,11 @@
         flex-wrap: wrap;
         width: 100%;
         .image-items {
+            &:hover {
+                .overflow-gallery {
+                    display: flex;
+                }
+            }
             cursor: pointer;
             margin: 5px;
             // width: 110px;
@@ -171,7 +194,72 @@
                 font-weight: 600;
                 font-size: 19px;
                 cursor: pointer;
+                z-index: 900;
+            }
+            .overflow-gallery {
+                display: none;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                background: rgba(0, 0, 0, 0.8);
+                top: 0;
+                align-items: center;
+                justify-content: center;
+                transition: .4s ease-out;
+                .trash {
+                    font-size: 1.2em;
+                    transition: .4s ease-out;
+                    padding: 12px;
+                    &:hover {
+                        // cursor: pointer;
+                        transform: scale(1.3);
+                    }
+                }
             }
         }
     }
+}
+
+.container-maps {
+    width: 100%;
+    position: relative;
+    height: 100%;
+    .maps {
+        height: 400px;
+        .leaflet-control-container {
+            .geosearch {
+                position: absolute;
+                top: 0;
+                left: 215px;
+                &.leaflet-touch.leaflet-bar {
+                    border: none;
+                }
+                form {
+                    display: block;
+                    input {
+                        min-width: 270px;
+                        height: 35px;
+                    }
+                    .reset {
+                        height: 35px;
+                        width: 35px;
+                        line-height: 35px;
+                    }
+                    .result {
+                        color: #000;
+                    }
+                }
+                .leaflet-bar-part {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+#mapId {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }

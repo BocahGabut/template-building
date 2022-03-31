@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap');
 .quotes-parallax {
-    margin-top: 0;
+    // margin-top: 0;
     margin-bottom: 0;
     position: relative;
     overflow: hidden;
@@ -31,17 +31,39 @@
                 font-style: normal;
                 color: #55595c;
                 text-align: center;
-                &::before {
-                    content: "“";
-                    font-size: 100px;
-                    color: #e6e9ec;
-                    font-family: Times New Roman, Times, serif;
-                    font-weight: 900;
-                    line-height: 1;
-                    display: block;
-                    height: 0.6em;
-                    color: #ffffff;
-                    font-size: calc(1.0px * 100);
+                img {
+                    width: 80%;
+                    height: 50%;
+                    &:last-child {
+                        transform: rotate(180deg);
+                    }
+                }
+                &.def {
+                    &::before {
+                        content: "“";
+                        font-size: 100px;
+                        color: #e6e9ec;
+                        font-family: Times New Roman, Times, serif;
+                        font-weight: 900;
+                        line-height: 1;
+                        display: block;
+                        height: 0.6em;
+                        color: #ffffff;
+                        font-size: calc(1.0px * 100);
+                    }
+                    &::after {
+                        content: "“";
+                        font-size: 100px;
+                        color: #e6e9ec;
+                        font-family: Times New Roman, Times, serif;
+                        font-weight: 900;
+                        line-height: 1;
+                        display: block;
+                        margin-top: 20px;
+                        height: 0.6em;
+                        color: #ffffff;
+                        font-size: calc(1.0px * 100);
+                    }
                 }
                 p {
                     color: #ffffff;

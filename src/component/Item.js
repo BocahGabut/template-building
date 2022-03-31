@@ -191,6 +191,62 @@ export const iconsScrool = [{
     },
 ]
 
+export const years = (startYear) => {
+    var currentYear = new Date().getFullYear(),
+        years = [];
+    startYear = startYear || 1990;
+    while (startYear <= currentYear) {
+        years.push({
+            value: startYear++,
+            display: startYear++
+        });
+    }
+    return years
+}
+
+export function formatRupiah(angka) {
+    var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi)
+
+    // tambahkan titik jika yang di input sudah menjadi angka ribuan
+    if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.')
+    }
+
+    rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah
+    return rupiah
+}
+
+export const baseUrl = () => {
+    // return 'http://192.168.0.100/api.rumahakad'
+    return 'http://localhost/api.rumahakad'
+}
+
+export const decodeBase64 = props => {
+    let data = props.text
+    let buff = new Buffer(data, 'base64')
+    let text = buff.toString('ascii')
+
+    return text
+
+}
+
+export const uniqID = () => {
+    var timestamp = new Date().getUTCMilliseconds()
+    var now = new Date();
+
+    timestamp += now.getFullYear().toString()
+    timestamp += (now.getMonth < 9 ? '0' : '') + now.getMonth().toString()
+    timestamp += ((now.getDate < 10) ? '0' : '') + now.getDate().toString()
+    timestamp += '.' + new Date().getTime() + '.' + Math.random() + new Date().getMilliseconds()
+
+    return timestamp
+}
+
 export const quotes = [{
         items: "Dan nikahkanlah orang-orang yang sendirian di antara kamu, dan orang-orang yang layak (menikah) dari hamba sahayamu yang lelaki dan hamba-hamba sahayamu yang perempuan. jika mereka miskin Allah akan mengkayakan mereka dengan karunianya. Dan Allah Maha Luas (pemberiannya) dan Maha Mengetahui. (QS. An Nuur (24) : 32)"
     },
@@ -216,8 +272,8 @@ export const quotes = [{
         `
     },
     {
-        items: `“Dan firman-Nya: Sebab itu laki-laki akan meninggalkan ayah dan ibunya dan bersatu dengan isterinya, sehingga keduanya itu menjadi satu daging.Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang telah dipersatukan Allah, tidak boleh diceraikan manusia.”
-        Matius 19:5-6
+        items: `"Wahai Yang Maha Lembut, manjakanlah hatiku yang sendiri ini. 
+        Bahagiakanlah aku dalam pernikahan yang penuh cinta, mesra & setia." Mario Teguh
         `
     },
     {
@@ -227,5 +283,50 @@ export const quotes = [{
         
         Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.`
     },
+    {
+        items: `Menikah itu nasib, mencintai itu takdir. 
+        Kamu bisa berencana menikahi siapa, tapi tak dapat kau rencanakan cintamu untuk siapa. Sujiwo Tejo`
+    },
+    {
+        items: `"Marriage is not 50-50, divorce is 50-50. Marriage has to be 100-100. It isn't dividing everything in half, but giving everything you've got!" DaveWillis.org`
+    },
+    {
+        items: `Cinta bukanlah mencari pasangan yang sempurna, tapi menerima pasangan kita dengan sempurna. Asma Wadia`
+    }
 
+]
+
+export const sparator = [{
+        src: `./decor/quotes-21100219.png`
+    },
+    {
+        src: `./decor/quotes-21100220.png`
+    },
+    {
+        src: `./decor/quotes-21100221.png`
+    },
+    {
+        src: `./decor/quotes-21100222.png`
+    },
+    {
+        src: `./decor/quotes-21100223.png`
+    },
+    {
+        src: `./decor/quotes-21100224.png`
+    },
+    {
+        src: `./decor/quotes-21100225.png`
+    },
+    {
+        src: `./decor/quotes-21100226.png`
+    },
+    {
+        src: `./decor/quotes-21100227.png`
+    },
+    {
+        src: `./decor/quotes-21100228.png`
+    },
+    {
+        src: `./decor/quotes-21100229.png`
+    },
 ]

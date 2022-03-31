@@ -7,7 +7,7 @@ import Slider from "react-slick";
 const TimeLineLeft = () => {
     return(
         <>
-            <div className="timeline-container left">
+            <div className="time-line timeline-container left">
                 <ul className="timeline">
                     <li className="timeline-items">
                         <div className="periode aos-init"
@@ -130,7 +130,9 @@ const TimeLineLeft = () => {
     )
 }
 
-const TimelineSlick = () => {
+const TimelineSlick = (props) => {
+    const data = props.data
+
     const settings = {
         dots: true,
         infinite: false,
@@ -170,87 +172,57 @@ const TimelineSlick = () => {
               }
             }
           ]
-      };
+      }
     return(
         <>
-            <div className="timeline-slick">
+            <div className="time-line timeline-slick">
                 <Slider {...settings}>
-                    <div className="slider-container aos-init" data-aos="fade-left"
-                                    data-aos-offset="200"
-                                    data-aos-delay="250"
-                                    data-aos-duration="1000">
-                        <div className="slider-content">
-                            <div className="slider-image">
-                                <img src="https://www.99.co/blog/indonesia/wp-content/uploads/2020/12/foto-prewedding-unik-dan-murah.jpg" alt="" />
+                    {
+                        (props.animate) 
+                        ?
+                        data.data.map((items,index) => {
+                            return(
+                                <div className="slider-container aos-init" data-aos="fade-left"
+                                            data-aos-offset="200"
+                                            data-aos-delay="250"
+                                            data-aos-duration="1000">
+                                <div className="slider-content">
+                                    <div className="slider-image">
+                                        <img src={items.image} alt="timeline" />
+                                    </div>
+                                    <div className="slider-content-inner">
+                                        <div className="year">{items.title}</div>
+                                        <div className="month">{items.sub_title}</div>
+                                        <p>{items.description}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="slider-content-inner">
-                                <div className="year">1914</div>
-                                <div className="month">June 28</div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, ex rem quaerat at quisquam culpa natus adipisci reprehenderit laborum unde tenetur, mollitia sapiente quasi consequuntur illo soluta ipsum cupiditate illum?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="slider-container aos-init" data-aos="fade-left"
-                                    data-aos-offset="200"
-                                    data-aos-delay="250"
-                                    data-aos-duration="1000">
-                        <div className="slider-content">
-                            <div className="slider-image">
-                                <img src="https://cdn-cas.orami.co.id/parenting/images/Foto_Prewedding_Casual_pinimg.com.width-800.jpg" alt="" />
-                            </div>
-                            <div className="slider-content-inner">
-                                <div className="year">1914</div>
-                                <div className="month">June 28</div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, ex rem quaerat at quisquam culpa natus adipisci reprehenderit laborum unde tenetur, mollitia sapiente quasi consequuntur illo soluta ipsum cupiditate illum?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="slider-container aos-init" data-aos="fade-left"
-                                    data-aos-offset="200"
-                                    data-aos-delay="250"
-                                    data-aos-duration="1000">
-                        <div className="slider-content">
-                            <div className="slider-image">
-                                <img src="https://i.pinimg.com/originals/fb/a7/18/fba718d440e93dabc3c1f90596401667.jpg" alt="" />
-                            </div>
-                            <div className="slider-content-inner">
-                                <div className="year">1914</div>
-                                <div className="month">June 28</div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, ex rem quaerat at quisquam culpa natus adipisci reprehenderit laborum unde tenetur, mollitia sapiente quasi consequuntur illo soluta ipsum cupiditate illum?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="slider-container aos-init"
-                    data-aos="fade-left"
-                                    data-aos-offset="200"
-                                    data-aos-delay="250"
-                                    data-aos-duration="1000">
-                        <div className="slider-content">
-                            <div className="slider-image">
-                                <img src="https://cdn-2.tstatic.net/bali/foto/bank/images/syarat-foto-prewedding-di-areal-bandara-ngurah-rai-bali.jpg" alt="" />
-                            </div>
-                            <div className="slider-content-inner">
-                                <div className="year">1914</div>
-                                <div className="month">June 28</div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, ex rem quaerat at quisquam culpa natus adipisci reprehenderit laborum unde tenetur, mollitia sapiente quasi consequuntur illo soluta ipsum cupiditate illum?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="slider-container aos-init" data-aos="fade-left"
-                                    data-aos-offset="200"
-                                    data-aos-delay="250"
-                                    data-aos-duration="1000">
-                        <div className="slider-content">
-                            <div className="slider-image">
-                                <img src="https://thehouse.studio/website/images/gallery/prewedding-thematic-firs-18390606052019.jpg" alt="" />
-                            </div>
-                            <div className="slider-content-inner">
-                                <div className="year">1914</div>
-                                <div className="month">June 28</div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, ex rem quaerat at quisquam culpa natus adipisci reprehenderit laborum unde tenetur, mollitia sapiente quasi consequuntur illo soluta ipsum cupiditate illum?</p>
-                            </div>
-                        </div>
-                    </div>
+                            )
+                        })
+                        : 
+                        data.data.map((items,index) => {
+                            return(
+                                <div className="slider-container" key={index}>
+                                    <div className="slider-content">
+                                        {
+                                            (items.image !== null)
+                                            ? 
+                                                <div className="slider-image">
+                                                    <img src={items.image} alt="timeline" />
+                                                </div>
+                                            : ''
+                                        }
+                                        <div className="slider-content-inner">
+                                            <div className="year">{items.title}</div>
+                                            <div className="month">{items.sub_title}</div>
+                                            <p>{items.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    
                 </Slider>
             </div>
         </>
@@ -310,7 +282,7 @@ class TimelineSlickSection extends Component{
           };
         return(
             <>
-                <div className="timeline-slick-section aos-init"  data-aos="fade-up"
+                <div className="time-line timeline-slick-section aos-init"  data-aos="fade-up"
                                     data-aos-offset="200"
                                     data-aos-delay="250"
                                     data-aos-duration="1000">
@@ -371,6 +343,7 @@ class TimelineSlickSection extends Component{
         )
     }
 }
+
 class TimelineSlickWidth extends Component{
     constructor(props){
         super(props)
@@ -423,7 +396,7 @@ class TimelineSlickWidth extends Component{
           };
         return(
             <>
-                <div className="timeline-slick-section-210">
+                <div className="time-line timeline-slick-section-210">
                     <Slider {...settings}>
                         <div className="container-items">
                             <div className="content-210">
@@ -480,14 +453,14 @@ const TimeLine = (props) => {
       }, []);
     switch(props.type){
         case 'left' :
-            return <TimeLineLeft />
+            return <TimeLineLeft data={props.data} animate={props.animate} />
         case 'slick' :
-            return <TimelineSlick />
+            return <TimelineSlick data={props.data} animate={props.animate} />
         case 'slick-section' :
-            return <TimelineSlickSection />
+            return <TimelineSlickSection data={props.data} animate={props.animate} />
         case 'slick-section-210' :
-            return <TimelineSlickWidth />
-            default : return <TimeLineLeft />
+            return <TimelineSlickWidth data={props.data} animate={props.animate} />
+            default : return <TimeLineLeft data={props.data} animate={props.animate} />
     }
 }
 

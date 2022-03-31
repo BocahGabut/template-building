@@ -5,7 +5,7 @@ import Details from './details'
 const ListDetails = (props) => {
     return(
         <>
-            <div className="list-details">
+            <div className={`list-details ${props.className ? props.className : ''}`}>
                 <div className="navbar-top-list">
                     <div onClick={() => props.handleClick()} className="back--">
                         <i className="far fa-arrow-left"></i>

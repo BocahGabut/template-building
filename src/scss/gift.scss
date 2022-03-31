@@ -17,7 +17,11 @@
         background: rgba(246, 246, 246, 255);
         margin: auto;
         width: 414px;
-        position: relative;
+        // position: relative;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         z-index: 1592;
         .top {
             width: 100%;
@@ -40,14 +44,34 @@
             background: #fff;
         }
         .content {
+            &.iframe {
+                padding: 0;
+            }
             padding: 10px 20px;
             background: #fff;
+            position: relative;
+            max-height: 490px;
+            overflow: auto;
+            &::-webkit-scrollbar-track {
+                background-color: rgb(255, 255, 255);
+            }
+            &::-webkit-scrollbar {
+                width: 7px;
+                background-color: #e85032;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: #e85032;
+            }
             .content-top {
                 h5 {
                     font-size: 15.5px;
                 }
             }
             .content-body {
+                iframe {
+                    width: 100%;
+                    min-height: 480px;
+                }
                 background: rgba(246, 246, 246, 255);
                 .gift-selected {
                     display: flex;
@@ -78,8 +102,19 @@
                     }
                 }
                 .gift-cst {
-                    background: #fff;
+                    &.error {
+                        .error {
+                            display: inline-block;
+                        }
+                    }
+                    &.rupiah {
+                        input {
+                            padding-left: 60px;
+                        }
+                    }
                     padding: 10px 0;
+                    background: #fff;
+                    position: relative;
                     input {
                         width: 100%;
                         padding: 5px 10px;
@@ -88,9 +123,43 @@
                         color: #e85032;
                         outline: none;
                         border: none;
+                        position: relative;
                         &::placeholder {
-                            color: #e85032;
+                            color: #e850328e;
                         }
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                            /* display: none; <- Crashes Chrome on hover */
+                            -webkit-appearance: none;
+                            margin: 0;
+                            /* <-- Apparently some margin are still there even though it's hidden */
+                        }
+                        &[type=number] {
+                            -moz-appearance: textfield;
+                            /* Firefox */
+                        }
+                    }
+                    textarea {
+                        width: 100%;
+                        padding: 5px 10px;
+                        font-weight: 600;
+                        font-size: 22px;
+                        // color: #e85032;
+                        outline: none;
+                        border: none;
+                        position: relative;
+                    }
+                    span {
+                        position: absolute;
+                        top: 36.5px;
+                        font-size: 35px;
+                        left: 3px;
+                        font-weight: 600;
+                        color: #e85032;
+                    }
+                    .error {
+                        display: none;
+                        color: red;
                     }
                 }
                 .gift-details {

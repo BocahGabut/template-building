@@ -1,55 +1,46 @@
-import React, { memo } from 'react'
+import React, { Component } from 'react'
 import {NavbarBuilder,SidebarBuilder} from '../component/navbar-builder'
 import ModalImage from "../component/modal-image";
-import { AddLocalStorage } from '../main';
 import Theme200219 from '../editable/theme-2';
+import {isMobile} from 'react-device-detect';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { dataGallery } from '../store';
 
-import Modal from '../component/modal';
+class Builder extends Component {
 
-const Builder = memo(function Builder(){
-    
-    const setEditable = () => {
-        AddLocalStorage('editableContent',true)
+    async componentDidMount() {
+        const promise = axios.get('http://localhost/api.rumahakad/api/gallery?Api-Keys-Rumah-akad=6be41184cdca86ebbc56da4433f303ae')
+        
+        promise
+        .then((result) => {
+            this.props.hanldeDispact(result.data.data)
+        })
+        .catch(error => console.log(error))
     }
 
-    setEditable()
-
-    // const getIframe = () => {
-    //     const myIframe = document.getElementById('frame-preview')
-    //     setTimeout(() => {
-    //         const iframeWindow = myIframe.contentWindow
-    //         console.log(iframeWindow.postMessage)
-    //     }, 3500);
-    // }
-
-    // getIframe()
-
-    return(
-        <>
-            <NavbarBuilder />
-            <SidebarBuilder />
-            <ModalImage />
-            <div className="builder ">
-                <div className="builder-container" id='builder-container'>
-                    {/* <iframe className="responsive-iframe" id='frame-preview' title='invitation'>
-                        <Theme200219/>
-                    </iframe> */}
-                    {/* <Iframe url="http://localhost:3000/theme2-edit" className="responsive-iframe"/> */}
-                    <div className="responsive-iframe">
-                        <Theme200219 />
+    render() {
+        return(
+            <>
+                <NavbarBuilder />
+                <SidebarBuilder />
+                <ModalImage />
+                <div className={`builder ${isMobile ? 'mobile' : ''}`}>
+                    <div className="builder-container" id='builder-container'>
+                        <div className="responsive-iframe">
+                            <Theme200219 />
+                        </div>
                     </div>
-                    {/* <FrameApp /> */}
-                    {/* <iframe className="responsive-iframe" id='frame-preview' title='invitation' src="http://localhost:3000/theme2-edit"></iframe> */}
-                    {/* <Frame
-                        className="responsive-iframe"
-                        initialContent='<!DOCTYPE html><html><head></head><body><div id="iframe"></div></body></html>'
-                        mountTarget='#iframe'>
-                        <Theme200219 />
-                    </Frame> */}
                 </div>
-            </div>
-        </>
-    )
-})
+            </>
+        )
+    }
+}
 
-export default Builder
+const dispacthToState = (dispact) => {
+    return {
+        hanldeDispact: (data) => dispact(dataGallery({data: data}))
+    }
+}
+
+export default connect(null,dispacthToState)(Builder)

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-
+import { ScrollTo } from '../component/other'
 import ListDetails from './list-details'
 
 const Items = (props) => {
     return(
-        <div onClick={() => props.handleClick(props.title,props.icons,props.index)} className={`list-menu ${props.className}`}>
+        <div onClick={() => props.handleClick(props.title,props.icons,props.index,props.target)} className={`list-menu ${props.className}`}>
             <i className={props.icons}></i>
             <label>{props.title}</label>
         </div>
@@ -14,7 +14,7 @@ const Items = (props) => {
 const ListItems = (props) => {
     return(
         <>
-            <div className="list-container">
+            <div className={`list-container ${props.className ? props.className : ''}`}>
                     <div className="property-container mt-3">
                         <div className="ra-sm-property image rounded">
                             <div className="website-stat pt-1 pb-1">
@@ -28,8 +28,9 @@ const ListItems = (props) => {
                         <label>Konfigurasi Tema Undangan:</label>
                         <div className="list-content mt-1">
                             <div className="row">
-                                <Items handleClick={(a,b,c) => props.handleClick(a,b,c)} index="0021898317" className="col-4" icons="far fa-heading"  title="Header" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} target="hero-background" index="0021898317" className="col-4" icons="far fa-heading"  title="Header" />
                                 {/* <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-heading" title="Header" /> */}
+                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-pager" title="Cover" />
                             </div>
                             <hr />
                         </div>
@@ -38,24 +39,23 @@ const ListItems = (props) => {
                         <label>Konfigurasi Undangan:</label>
                         <div className="list-content mt-1">
                             <div className="row">
-                                <Items handleClick={(a,b,c) => props.handleClick(a,b,c)} className="col-4" index="0021898318" icons="far fa-user-friends" title="Profil Pasangan" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-ballot" title="Detail Undangan" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-pager" title="Cover Undangan" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-comment-dots" title="Quote" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-photo-video" title="Gallery" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-book" title="Buku Tamu" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-heart-circle" title="Love Story" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} target="mempelai-container" className="col-4" index="0021898318" icons="far fa-user-friends" title="Profil" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} target="container-celebrate" className="col-4" index="0021898319" icons="far fa-ballot" title="Details" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} target="gallery" className="col-4" index="0021898320" icons="far fa-photo-video" title="Gallery" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} target="quotes-container" index="0021898321" className="col-4" icons="far fa-comment-dots" title="Quote" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} target="time-line" index="0021898322" className="col-4" icons="far fa-heart-circle" title="Love Story" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} index="0021898326" className="col-4" icons="far fa-book" title="Buku Tamu" />
                             </div>
                             <hr />
                             <div className="row">
                                 <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-camera-movie" title="Live Streaming" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-album-collection" title="Music Background" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-clipboard-list" title="Daftar Ucapan" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} index="0021898323" className="col-4" icons="far fa-album-collection" title="Music Background" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} index="0021898325" className="col-4" icons="far fa-clipboard-list" title="Daftar Ucapan" />
                             </div>
                             <hr />
                             <div className="row">
                                 <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-envelope" title="Amplop Digital" />
-                                <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-clipboard-check" title="Konfirmasi Kehadiran" />
+                                <Items handleClick={(a,b,c,d) => props.handleClick(a,b,c,d)} index="0021898324" className="col-4" icons="far fa-clipboard-check" title="Konfirmasi Kehadiran" />
                                 <Items handleClick={(a,b) => props.handleClick(a,b)} className="col-4" icons="far fa-share-alt" title="Share Undangan" />
                             </div>
                         </div>
@@ -78,7 +78,7 @@ class List extends Component {
         }
     }
 
-    handleDetails = (title,icons,type) => {
+    handleDetails = (title,icons,type,target) => {
         this.setState({
             details: true,
             // index: index
@@ -92,6 +92,7 @@ class List extends Component {
             })
         }
 
+        ScrollTo(target) 
     }
 
     handleBack = () => {
@@ -106,9 +107,9 @@ class List extends Component {
                 {
                     (this.state.details === false) 
                     ? 
-                    <ListItems handleClick={(a,b,c) => this.handleDetails(a,b,c)} />
+                    <ListItems className={this.props.className} handleClick={(a,b,c,d) => this.handleDetails(a,b,c,d)} />
                     :
-                    <ListDetails title={this.state.title} icons={this.state.icons} items={this.state.type} handleClick={() => this.handleBack()} />
+                    <ListDetails className={this.props.className} title={this.state.title} icons={this.state.icons} items={this.state.type} handleClick={() => this.handleBack()} />
                 }
             </>
         )

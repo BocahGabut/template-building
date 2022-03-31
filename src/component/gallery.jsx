@@ -62,10 +62,10 @@ const GalleryMasory = (props) => {
                 (props.animate === false) ? 
                     <div className="masory-container">
                     {
-                        props.data.map((items) => {
+                        props.data.map((items,index) => {
                         return(
-                                <div className="masory-items" key={items.id}>
-                                    <img src={items.image} alt="" />
+                                <div className="masory-items" key={index}>
+                                    <img src={items.path} alt="" />
                                 </div>
                             )
                         })
@@ -73,14 +73,14 @@ const GalleryMasory = (props) => {
                 </div> : 
                 <div className="masory-container">
                     {
-                        props.data.map((items) => {
+                        props.data.map((items,index) => {
                         return(
-                                <div className="masory-items aos-init" key={items.id} 
+                                <div className="masory-items aos-init" key={index} 
                             data-aos="fade-up"
                                     data-aos-offset="200"
                                     data-aos-delay="250"
                                     data-aos-duration="1000">
-                                    <img src={items.image} alt="" />
+                                    <img src={items.path} alt="" />
                                 </div>
                             )
                         })

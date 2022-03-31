@@ -1,79 +1,16 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import '../scss/countdown.scss'
 import Aos from 'aos';
 
-const CountDownAnimate = (props) => {
-    return(
-        <>
-            <div className={`container-countdown ${props.class}`}>
-                <div className="card-countdown"
-                data-aos="zoom-in-up"
-                            data-aos-offset="200"
-                            data-aos-delay="250"
-                            data-aos-duration="1000">
-                    <h5 id='days'>355</h5>
-                    <p>Hari</p>
-                </div>
-                <div className="card-countdown"
-                data-aos="zoom-in-right"
-                            data-aos-offset="200"
-                            data-aos-delay="250"
-                            data-aos-duration="1000">
-                    <h5 id='hours'>21</h5>
-                    <p>Jam</p>
-                </div>
-                <div className="card-countdown"
-                data-aos="zoom-out-right"
-                            data-aos-offset="200"
-                            data-aos-delay="250"
-                            data-aos-duration="1000">
-                    <h5 id='minute'>34</h5>
-                    <p>Menit</p>
-                </div>
-                <div className="card-countdown"
-                data-aos="zoom-out-up"
-                            data-aos-offset="200"
-                            data-aos-delay="250"
-                            data-aos-duration="1000">
-                    <h5 id='seconds'>35</h5>
-                    <p>Detik</p>
-                </div>
-            </div>
-        </>
-    )
-}
-const CountDownNotAnimate = (props) => {
-    return(
-        <>
-            <div className={`container-countdown ${props.class}`}>
-                <div className="card-countdown">
-                    <h5 id='days'>355</h5>
-                    <p>Hari</p>
-                </div>
-                <div className="card-countdown">
-                    <h5 id='hours'>21</h5>
-                    <p>Jam</p>
-                </div>
-                <div className="card-countdown">
-                    <h5 id='minute'>34</h5>
-                    <p>Menit</p>
-                </div>
-                <div className="card-countdown">
-                    <h5 id='seconds'>35</h5>
-                    <p>Detik</p>
-                </div>
-            </div>
-        </>
-    )
-}
 
  const Countdown = (props) => {
     useEffect(() => {
         Aos.init({
           duration : 2000
         });
-        count();
       });
+    const [finish, setfinish] = useState(false);
+
     const count = () => {
         var end = new Date(props.date);
     
@@ -90,20 +27,97 @@ const CountDownNotAnimate = (props) => {
             var minutes = Math.floor((distance % _hour) / _minute);
             var seconds = Math.floor((distance % _minute) / _second);
     
-            document.getElementById('days').innerHTML = days;
-            document.getElementById('hours').innerHTML = hours;
-            document.getElementById('minute').innerHTML = minutes;
-            document.getElementById('seconds').innerHTML = seconds ;
+            
+            
+            if(days < 0){
+                setfinish(true)
+            } else if(days >= 0) {
+                document.getElementById('days').innerHTML = days;
+                document.getElementById('hours').innerHTML = hours;
+                document.getElementById('minute').innerHTML = minutes;
+                document.getElementById('seconds').innerHTML = seconds ;
+            }
+
         }
     
         setInterval(showRemaining, 1000);
     }
+    
+    const CountDownAnimate = (props) => {
+        count()
+        return(
+            <>
+                <div className={`container-countdown ${props.class}`}>
+                    <div className="card-countdown"
+                    data-aos="zoom-in-up"
+                                data-aos-offset="200"
+                                data-aos-delay="250"
+                                data-aos-duration="1000">
+                        <h5 id='days'>0</h5>
+                        <p>Hari</p>
+                    </div>
+                    <div className="card-countdown"
+                    data-aos="zoom-in-right"
+                                data-aos-offset="200"
+                                data-aos-delay="250"
+                                data-aos-duration="1000">
+                        <h5 id='hours'>0</h5>
+                        <p>Jam</p>
+                    </div>
+                    <div className="card-countdown"
+                    data-aos="zoom-out-right"
+                                data-aos-offset="200"
+                                data-aos-delay="250"
+                                data-aos-duration="1000">
+                        <h5 id='minute'>0</h5>
+                        <p>Menit</p>
+                    </div>
+                    <div className="card-countdown"
+                    data-aos="zoom-out-up"
+                                data-aos-offset="200"
+                                data-aos-delay="250"
+                                data-aos-duration="1000">
+                        <h5 id='seconds'>0</h5>
+                        <p>Detik</p>
+                    </div>
+                </div>
+            </>
+        )
+    }
+    const CountDownNotAnimate = (props) => {
+        count()
+        return(
+            <>
+                {
+                    <div className={`container-countdown ${props.class}`}>
+                        <div className="card-countdown">
+                            <h5 id='days'>0</h5>
+                            <p>Hari</p>
+                        </div>
+                        <div className="card-countdown">
+                            <h5 id='hours'>0</h5>
+                            <p>Jam</p>
+                        </div>
+                        <div className="card-countdown">
+                            <h5 id='minute'>0</h5>
+                            <p>Menit</p>
+                        </div>
+                        <div className="card-countdown">
+                            <h5 id='seconds'>0</h5>
+                            <p>Detik</p>
+                        </div>
+                    </div>
+                }
+            </>
+        )
+    }
+
 
     switch(props.animate){
         case true : 
             return <CountDownAnimate class={props.class} />
         case false : 
-            return <CountDownNotAnimate class={props.class} />
+            return (finish) ? '' : <CountDownNotAnimate class={props.class} />
         default : 
             return <CountDownAnimate class={props.class} />
     }
